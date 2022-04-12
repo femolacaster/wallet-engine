@@ -35,5 +35,5 @@ VALUES (
 
 -- name: ChangeWalletStatus :exec
 UPDATE wallets SET
-  is_active = @is_active
-WHERE id = @id;
+  is_active = ?
+WHERE id = ?;

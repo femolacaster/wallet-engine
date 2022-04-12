@@ -2,7 +2,7 @@
 // versions:
 //   sqlc v1.13.0
 
-package postgresql
+package mysql
 
 import (
 	"database/sql"
@@ -10,7 +10,7 @@ import (
 )
 
 type Transactions struct {
-	ID                     int32
+	ID                     int64
 	TransactionRef         string
 	TransactionType        string
 	TransactionTimestamp   time.Time
@@ -24,8 +24,8 @@ type Transactions struct {
 	WalletID               sql.NullInt32
 }
 
-type Wallet struct {
-	ID           int32
+type Wallets struct {
+	ID           int64
 	WalletNumber string
 	IsActive     string
 	FirstName    sql.NullString

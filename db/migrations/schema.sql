@@ -1,5 +1,5 @@
-CREATE TABLE wallet (
-  id serial PRIMARY KEY NOT NULL,
+CREATE TABLE wallets (
+  id BIGINT PRIMARY KEY NOT NULL,
   wallet_number text UNIQUE NOT NULL,
   is_active text NOT NULL,
   first_name text,
@@ -10,11 +10,11 @@ CREATE TABLE wallet (
   dob DATE,
   currency text NOT NULL,
   created_time TIMESTAMP default current_timestamp,
-  modified_time TIMESTAMP default current_timestamp
+  modified_time TIMESTAMP default current_timestamp on update current_timestamp
 );
 
 CREATE TABLE transactions (
-  id serial  PRIMARY KEY,
+  id BIGINT  PRIMARY KEY,
   transaction_ref text UNIQUE NOT NULL,
   transaction_type text NOT NULL,
   transaction_timestamp TIMESTAMP NOT NULL,
@@ -24,6 +24,6 @@ CREATE TABLE transactions (
   transaction_description text NOT NULL,
   balance numeric(20,2) NOT NULL,
   created_time TIMESTAMP default current_timestamp,
-  modified_time TIMESTAMP default current_timestamp,
+  modified_time TIMESTAMP default current_timestamp on update current_timestamp,
   wallet_id int references wallet(id)
 );

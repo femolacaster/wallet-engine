@@ -5,15 +5,18 @@ import (
 	"fmt"
 	"log"
 	"os"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func newDB() (*sql.DB, error) {
-	db, err := sql.Open("pgx", os.Getenv("DATABASE_URL"))
+	db, err := sql.Open("mysql", os.Getenv("DATABASE_URL"))
 	if err != nil {
-		return db, fmt.Errorf("There was an error establishing database connection: %w", err)
+		return db, fmt.Errorf("there was an error establishing database connection: %w", err)
 	}
-	if err := db.Ping(); err != nil {
-		return db, fmt.Errorf("The database server could not be pinged: %w", err)
+	err = db.Ping()
+	if err != nil {
+		return db, fmt.Errorf("ping: %w", err)
 	}
 	return db, nil
 }
@@ -23,7 +26,11 @@ func main() {
 	if err != nil {
 		log.Fatal("A new connection of the DB could not be placed", err)
 	}
-	defer db.Close()
+	fmt.Println(db)
+	//defer db.Close()
+	/*
+		repo := mysql.NewWallet(db)
+		fmt.Println(repo)
+	*/
 
-	repo := postgresql.NewTask(db)
 }
