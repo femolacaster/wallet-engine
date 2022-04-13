@@ -1,5 +1,6 @@
 -- name: GenerateWallet :execresult
 INSERT INTO wallets (
+  id,
   wallet_number,
   is_active,
   first_name,
@@ -11,7 +12,7 @@ INSERT INTO wallets (
   currency
 )
 VALUES (
- ?,?, ?, ?, ?, ?, ?, ?, ?
+?, ?,?, ?, ?, ?, ?, ?, ?, ?
 );
 
 

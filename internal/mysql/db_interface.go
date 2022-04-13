@@ -35,30 +35,36 @@ func NewTransaction(db *sql.DB) *Transaction {
 func (w *Wallet) Create(ctx context.Context, walletNumber string, isActive string, firstName string, lastName string, email string, secretkey string, bvn string, dob time.Time, currency string) (internal.Wallet, error) {
 
 	sqlResult, err := w.q.GenerateWallet(ctx, GenerateWalletParams{
-		IsActive:  isActive,
-		FirstName: newNullString(firstName),
-		LastName:  newNullString(lastName),
-		Email:     email,
-		Secretkey: secretkey,
-		Bvn:       bvn,
-		Dob:       newNullTime(dob),
-		Currency:  currency,
+		WalletNumber: walletNumber,
+		IsActive:     isActive,
+		FirstName:    newNullString(firstName),
+		LastName:     newNullString(lastName),
+		Email:        email,
+		Secretkey:    secretkey,
+		Bvn:          bvn,
+		Dob:          newNullTime(dob),
+		Currency:     currency,
 	})
 	if err != nil {
 		return internal.Wallet{}, fmt.Errorf("generating a new wallet failed: %w", err)
 	}
 	id, err := sqlResult.LastInsertId()
+	fmt.Println("The last insert is", id)
+	if err != nil {
+		return internal.Wallet{}, fmt.Errorf("there are no last Wallet ids on insert: %w", err)
+	}
 
 	return internal.Wallet{
-		ID:        id,
-		IsActive:  isActive,
-		FirstName: newNullString(firstName),
-		LastName:  newNullString(lastName),
-		Email:     email,
-		Secretkey: secretkey,
-		Bvn:       bvn,
-		Dob:       newNullTime(dob),
-		Currency:  currency,
+		ID:           id,
+		WalletNumber: walletNumber,
+		IsActive:     isActive,
+		FirstName:    newNullString(firstName),
+		LastName:     newNullString(lastName),
+		Email:        email,
+		Secretkey:    secretkey,
+		Bvn:          bvn,
+		Dob:          newNullTime(dob),
+		Currency:     currency,
 	}, nil
 }
 
@@ -79,6 +85,10 @@ func (t *Transaction) Create(ctx context.Context, transactionRef string, transac
 		return internal.Transaction{}, fmt.Errorf("Transaction failed: %w", err)
 	}
 	id, err := sqlResult.LastInsertId()
+	fmt.Println("The last insert is", id)
+	if err != nil {
+		return internal.Transaction{}, fmt.Errorf("there are no last transaction ids on insert: %w", err)
+	}
 
 	return internal.Transaction{
 		ID:                     id,
@@ -95,8 +105,9 @@ func (t *Transaction) Create(ctx context.Context, transactionRef string, transac
 }
 
 // Deactivate or Activate a Wallet
-func (w *Wallet) Update(ctx context.Context, isActive string) error {
+func (w *Wallet) Update(ctx context.Context, id int64, isActive string) error {
 	if err := w.q.ChangeWalletStatus(ctx, ChangeWalletStatusParams{
+		ID:       id,
 		IsActive: isActive,
 	}); err != nil {
 		return fmt.Errorf("could not update wallet: %w", err)

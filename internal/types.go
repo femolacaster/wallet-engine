@@ -2,7 +2,6 @@ package internal
 
 import (
 	"database/sql"
-	"errors"
 	"time"
 )
 
@@ -22,6 +21,7 @@ type Transaction struct {
 }
 
 // TODO:Validate each of the transaction types
+/*
 func (t Transaction) Validate() error {
 	if t.TransactionRef == "" {
 		return errors.New("transaction reference is required")
@@ -29,6 +29,7 @@ func (t Transaction) Validate() error {
 
 	return nil
 }
+*/
 
 type Wallet struct {
 	ID           int64
@@ -46,6 +47,7 @@ type Wallet struct {
 }
 
 // TODO:Validate each of the wallet types
+/*
 func (w Wallet) Validate() error {
 	if w.WalletNumber == "" {
 		return errors.New("Wallet Number is required")
@@ -53,3 +55,4 @@ func (w Wallet) Validate() error {
 
 	return nil
 }
+*/

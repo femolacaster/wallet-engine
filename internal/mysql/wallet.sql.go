@@ -29,6 +29,7 @@ func (q *Queries) ChangeWalletStatus(ctx context.Context, arg ChangeWalletStatus
 
 const generateWallet = `-- name: GenerateWallet :execresult
 INSERT INTO wallets (
+  id,
   wallet_number,
   is_active,
   first_name,
@@ -40,11 +41,12 @@ INSERT INTO wallets (
   currency
 )
 VALUES (
- ?,?, ?, ?, ?, ?, ?, ?, ?
+?, ?,?, ?, ?, ?, ?, ?, ?, ?
 )
 `
 
 type GenerateWalletParams struct {
+	ID           int64
 	WalletNumber string
 	IsActive     string
 	FirstName    sql.NullString
@@ -58,6 +60,7 @@ type GenerateWalletParams struct {
 
 func (q *Queries) GenerateWallet(ctx context.Context, arg GenerateWalletParams) (sql.Result, error) {
 	return q.db.ExecContext(ctx, generateWallet,
+		arg.ID,
 		arg.WalletNumber,
 		arg.IsActive,
 		arg.FirstName,

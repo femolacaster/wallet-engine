@@ -1,5 +1,5 @@
 CREATE TABLE wallets (
-  id BIGINT PRIMARY KEY NOT NULL,
+  id BIGINT  PRIMARY KEY AUTO_INCREMENT,
   wallet_number text UNIQUE NOT NULL,
   is_active text NOT NULL,
   first_name text,
@@ -14,7 +14,7 @@ CREATE TABLE wallets (
 );
 
 CREATE TABLE transactions (
-  id BIGINT  PRIMARY KEY,
+  id BIGINT  PRIMARY KEY AUTO_INCREMENT,
   transaction_ref text UNIQUE NOT NULL,
   transaction_type text NOT NULL,
   transaction_timestamp TIMESTAMP NOT NULL,
@@ -25,5 +25,5 @@ CREATE TABLE transactions (
   balance numeric(20,2) NOT NULL,
   created_time TIMESTAMP default current_timestamp,
   modified_time TIMESTAMP default current_timestamp on update current_timestamp,
-  wallet_id int references wallet(id)
+  wallet_id int
 );
