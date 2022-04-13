@@ -28,14 +28,11 @@
 - [About the Project](#star2-about-the-project)
   * [Screenshots](#camera-screenshots)
   * [Tech Stack](#space_invader-tech-stack)
-  * [Features](#dart-features)
-  * [Color Reference](#art-color-reference)
   * [Environment Variables](#key-environment-variables)
 - [Getting Started](#toolbox-getting-started)
   * [Prerequisites](#bangbang-prerequisites)
-  * [Installation](#gear-installation)
+  * [Installation and Run](#gear-installation)
   * [Running Tests](#test_tube-running-tests)
-  * [Run Locally](#running-run-locally)
   * [Deployment](#triangular_flag_on_post-deployment)
 - [Usage](#eyes-usage)
 - [Roadmap](#compass-roadmap)
@@ -106,7 +103,7 @@ This project uses go >= 1.17
 
 
 <!-- Installation -->
-### :gear: Installation
+### :gear: Installation and Run
 
 Install my-project with npm
 
@@ -123,36 +120,6 @@ To run tests, run the following command
 ```bash
   yarn test test
 ```
-
-<!-- Run Locally -->
-### :running: Run Locally
-
-Clone the project
-
-```bash
-  git clone https://github.com/Louis3797/awesome-readme-template.git
-```
-
-Go to the project directory
-
-```bash
-  cd my-project
-```
-
-Install dependencies
-
-```bash
-  yarn install
-```
-
-Start the server
-
-```bash
-  yarn start
-```
-
-```
-
 
 <!-- Usage -->
 ## :eyes: Usage
