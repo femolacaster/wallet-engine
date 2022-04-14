@@ -99,7 +99,7 @@ type InsertTransactionParams struct {
 	Secretkey              string
 	TransactionStatus      string
 	TransactionDescription string
-	WalletID               sql.NullInt32
+	WalletID               int32
 }
 
 func (q *Queries) InsertTransaction(ctx context.Context, arg InsertTransactionParams) (sql.Result, error) {

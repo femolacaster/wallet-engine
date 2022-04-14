@@ -92,12 +92,10 @@ This project uses go >= 1.17
 Install my-project with npm
 
 ```bash
-  #Load Environmental Variables and configure bash to use direnv
+  #Load Environmental Variables and configure bash to use direnv and start API server
   direnv allow
   eval "$(direnv hook bash)"
-  #Start API server
-  cd cmd
-  go run main.go
+  cd cmd && go run main.go
 ```
    
 <!-- Running Tests -->

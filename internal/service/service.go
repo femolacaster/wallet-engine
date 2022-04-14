@@ -14,7 +14,7 @@ type WalletRepository interface {
 }
 
 type TransactionRepository interface {
-	Create(ctx context.Context, transactionRef string, transactionType string, transactionTimestamp time.Time, amount string, secretkey string, transactionStatus string, transactionDescription string, balance string, walletID int32) (internal.Transaction, error)
+	Create(ctx context.Context, transactionRef string, transactionType string, transactionTimestamp time.Time, amount string, secretkey string, transactionStatus string, transactionDescription string, walletID int32) (internal.Transaction, error)
 }
 
 type Wallet struct {
