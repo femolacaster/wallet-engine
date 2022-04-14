@@ -117,7 +117,7 @@ The endpoints are:
 curl -X POST -d '{"first_name":"Olufemi", "last_name":"Alabi", "email":"olufemi@example.com", "secretkey":"xxxxxxx", "bvn":"12678905", "dob":"2011-09-01", "currency":"naira"}' http://0.0.0.0:9967/wallet
 
 ** /wallets/{id:%s} - use this to update a new wallet. Change the is_active JSON input parameter to 0 or 1 to either activate or deactivate wallet. **
-curl -X PUT -d '{"is_active":"0"}' http://0.0.0.0:9967/wallets/3
+curl -X PUT -d '{"is_active":"1"}' http://0.0.0.0:9967/wallets/3
 
 ** /transactions- add a new debit or credit transaction on a wallet. The transaction_type JSON input parameter specifies whether it is debit or credit **
 curl -X POST -d '{"transaction_type":"credit", "amount":"500.02",  "secretkey":"xxxxxxx", "transaction_description":"Credit to wallet", "wallet_id":3}' http://0.0.0.0:9967/transaction

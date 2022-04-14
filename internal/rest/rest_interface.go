@@ -80,21 +80,21 @@ type Transaction struct {
 }
 
 type CreateWalletRequest struct {
-	firstName string    `json:"first_name"`
-	lastName  string    `json:"last_name"`
-	email     string    `json:"email"`
-	secretkey string    `json:"secretkey"`
-	bvn       string    `json:"bvn"`
-	dob       time.Time `json:"dob"`
-	currency  string    `json:"currency"`
+	FirstName string    `json:"first_name"`
+	LastName  string    `json:"last_name"`
+	Email     string    `json:"email"`
+	Secretkey string    `json:"secretkey"`
+	Bvn       string    `json:"bvn"`
+	Dob       time.Time `json:"dob"`
+	Currency  string    `json:"currency"`
 }
 
 type CreateTransactionRequest struct {
-	transactionType        string `json:"transaction_type"`
-	amount                 string `json:"amount"`
-	secretkey              string `json:"secretkey"`
-	transactionDescription string `json:"transaction_description"`
-	walletID               int32  `json:"wallet_id"`
+	TransactionType        string `json:"transaction_type"`
+	Amount                 string `json:"amount"`
+	Secretkey              string `json:"secretkey"`
+	TransactionDescription string `json:"transaction_description"`
+	WalletID               int32  `json:"wallet_id"`
 }
 
 type CreateWalletResponse struct {
@@ -107,17 +107,17 @@ type CreateTransactionResponse struct {
 
 func (wa *WalletHandler) create(w http.ResponseWriter, r *http.Request) {
 	var req CreateWalletRequest
-	fmt.Println(&req)
+
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		renderErrorResponse(w, "invalid request", http.StatusBadRequest)
 		return
 	}
-
+	fmt.Printf("The last request is%+v\n", req)
 	defer r.Body.Close()
 
 	walletNumber := xid.New().String()
 
-	wallet, err := wa.svc.Create(r.Context(), walletNumber, "1", req.firstName, req.lastName, req.email, req.secretkey, req.bvn, req.dob, req.currency)
+	wallet, err := wa.svc.Create(r.Context(), walletNumber, "1", req.FirstName, req.LastName, req.Email, req.Secretkey, req.Bvn, req.Dob, req.Currency)
 	if err != nil {
 		renderErrorResponse(w, "create failed", http.StatusInternalServerError)
 		return
@@ -154,7 +154,7 @@ func (wa *WalletHandler) update(w http.ResponseWriter, r *http.Request) {
 
 	defer r.Body.Close()
 
-	id, _ := mux.Vars(r)["id"]
+	id := mux.Vars(r)["id"]
 
 	parsedID, err := strconv.ParseInt(id, 10, 64)
 	if err == nil {
@@ -182,7 +182,7 @@ func (t *TransactionHandler) create(w http.ResponseWriter, r *http.Request) {
 	transactionRef := xid.New().String()
 	transactionTimestamp := time.Now()
 
-	transaction, err := t.svc.Create(r.Context(), transactionRef, req.transactionType, transactionTimestamp, req.amount, req.secretkey, "success", req.transactionDescription, req.walletID)
+	transaction, err := t.svc.Create(r.Context(), transactionRef, req.TransactionType, transactionTimestamp, req.Amount, req.Secretkey, "success", req.TransactionDescription, req.WalletID)
 
 	if err != nil {
 		renderErrorResponse(w, "create failed", http.StatusInternalServerError)
