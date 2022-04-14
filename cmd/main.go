@@ -1,16 +1,18 @@
 package main
 
 import (
-	"context"
 	"database/sql"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"time"
 
 	"github.com/femolacaster/wallet-engine/internal/mysql"
+	"github.com/femolacaster/wallet-engine/internal/rest"
 	"github.com/femolacaster/wallet-engine/internal/service"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/gorilla/mux"
 )
 
 func newDB() (*sql.DB, error) {
@@ -35,24 +37,23 @@ func main() {
 	walletSvc := service.NewWallet(walletRepo)
 	transactionRepo := mysql.NewTransaction(db)
 	transactionSvc := service.NewTransaction(transactionRepo)
-	layout := "2006-01-02"
-	dob, err := time.Parse(layout, time.Now().Format(layout))
-	if err != nil {
-		log.Fatal("DOB time could not be passed", err)
-	}
-	wallet, err := walletSvc.Create(context.Background(), "ASD123GTHOS", "0", "Olufemi", "Alabi", "femdomsteve@yahoo.com", "SCOFGRUIDS", "123453789", dob, "naira")
-	if err != nil {
-		log.Fatal("Could not insert wallet record", err)
-	}
-	fmt.Printf("NEW wallet %#v, err %s\n", wallet, err)
 
-	if err := walletSvc.Update(context.Background(), wallet.ID, "2"); err != nil {
-		log.Fatal("Could not update database", err)
-	}
-	transaction, err := transactionSvc.Create(context.Background(), "XDCVIONDFRTD", "debit", time.Now(), "600.90", "xxxxxxx", "success", "Payment for girls", "1000", 1)
-	if err != nil {
-		log.Fatal("Could not insert transaction record", err)
-	}
-	fmt.Printf("NEW transaction %#v, err %s\n", transaction, err)
+	r := mux.NewRouter()
 
+	rest.NewWalletHandler(walletSvc).Register(r)
+	rest.NewTransactionHandler(transactionSvc).Register(r)
+
+	address := "0.0.0.0:9967"
+
+	srv := &http.Server{
+		Handler:           r,
+		Addr:              address,
+		ReadTimeout:       1 * time.Second,
+		ReadHeaderTimeout: 1 * time.Second,
+		WriteTimeout:      1 * time.Second,
+		IdleTimeout:       1 * time.Second,
+	}
+	log.Println("Starting server", address)
+
+	log.Fatal(srv.ListenAndServe())
 }

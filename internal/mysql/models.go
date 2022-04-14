@@ -18,7 +18,6 @@ type Transactions struct {
 	Secretkey              string
 	TransactionStatus      string
 	TransactionDescription string
-	Balance                string
 	CreatedTime            sql.NullTime
 	ModifiedTime           sql.NullTime
 	WalletID               sql.NullInt32

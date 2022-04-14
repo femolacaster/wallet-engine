@@ -58,18 +58,18 @@ func (w *Wallet) Create(ctx context.Context, walletNumber string, isActive strin
 		ID:           id,
 		WalletNumber: walletNumber,
 		IsActive:     isActive,
-		FirstName:    newNullString(firstName),
-		LastName:     newNullString(lastName),
+		FirstName:    firstName,
+		LastName:     lastName,
 		Email:        email,
 		Secretkey:    secretkey,
 		Bvn:          bvn,
-		Dob:          newNullTime(dob),
+		Dob:          dob,
 		Currency:     currency,
 	}, nil
 }
 
 // Generate Transactions
-func (t *Transaction) Create(ctx context.Context, transactionRef string, transactionType string, transactionTimestamp time.Time, amount string, secretkey string, transactionStatus string, transactionDescription string, balance string, walletID int32) (internal.Transaction, error) {
+func (t *Transaction) Create(ctx context.Context, transactionRef string, transactionType string, transactionTimestamp time.Time, amount string, secretkey string, transactionStatus string, transactionDescription string, walletID int32) (internal.Transaction, error) {
 	sqlResult, err := t.q.InsertTransaction(ctx, InsertTransactionParams{
 		TransactionRef:         transactionRef,
 		TransactionType:        transactionType,
@@ -78,8 +78,7 @@ func (t *Transaction) Create(ctx context.Context, transactionRef string, transac
 		Secretkey:              secretkey,
 		TransactionStatus:      transactionStatus,
 		TransactionDescription: transactionDescription,
-		Balance:                balance,
-		WalletID:               newNullInt32(walletID),
+		WalletID:               walletID,
 	})
 	if err != nil {
 		return internal.Transaction{}, fmt.Errorf("Transaction failed: %w", err)
@@ -99,8 +98,7 @@ func (t *Transaction) Create(ctx context.Context, transactionRef string, transac
 		Secretkey:              secretkey,
 		TransactionStatus:      transactionStatus,
 		TransactionDescription: transactionDescription,
-		Balance:                balance,
-		WalletID:               newNullInt32(walletID),
+		WalletID:               walletID,
 	}, nil
 }
 

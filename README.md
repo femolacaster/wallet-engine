@@ -2,23 +2,9 @@
   <h1>Wallet Engine</h1>
   
   <p>
-    A simple wallet engine microservices API implementation! 
+    A simple wallet engine microservices API implementation written in idiomatic GO.
   </p>
   
-  
-<!-- Badges -->
-
-   
-<h4>
-    <a href="https://github.com/Louis3797/awesome-readme-template/">View Demo</a>
-  <span> · </span>
-    <a href="https://github.com/Louis3797/awesome-readme-template">Documentation</a>
-  <span> · </span>
-    <a href="https://github.com/Louis3797/awesome-readme-template/issues/">Report Bug</a>
-  <span> · </span>
-    <a href="https://github.com/Louis3797/awesome-readme-template/issues/">Request Feature</a>
-  </h4>
-</div>
 
 <br />
 
@@ -36,9 +22,6 @@
   * [Deployment](#triangular_flag_on_post-deployment)
 - [Usage](#eyes-usage)
 - [Roadmap](#compass-roadmap)
-- [Contributing](#wave-contributing)
-  * [Code of Conduct](#scroll-code-of-conduct)
-- [FAQ](#grey_question-faq)
 - [License](#warning-license)
 - [Contact](#handshake-contact)
 - [Acknowledgements](#gem-acknowledgements)
@@ -47,7 +30,8 @@
 
 <!-- About the Project -->
 ## :star2: About the Project
-
+A simple wallet engine microservices API implementation written in idiomatic GO.
+Some technical considerations I took were to use a microservices implementation with a repository interface and an onion-style architecture around the domain-driven design. This is to make sure the Golang code is as idiomatic as possible, maintainable, reduces technical debts and release cycles, and can scale rapidly.
 
 <!-- Screenshots -->
 ### :camera: Screenshots

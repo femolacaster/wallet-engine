@@ -14,10 +14,9 @@ type Transaction struct {
 	Secretkey              string
 	TransactionStatus      string
 	TransactionDescription string
-	Balance                string
 	CreatedTime            sql.NullTime
 	ModifiedTime           sql.NullTime
-	WalletID               sql.NullInt32
+	WalletID               int32
 }
 
 // TODO:Validate each of the transaction types
@@ -35,12 +34,12 @@ type Wallet struct {
 	ID           int64
 	WalletNumber string
 	IsActive     string
-	FirstName    sql.NullString
-	LastName     sql.NullString
+	FirstName    string
+	LastName     string
 	Email        string
 	Secretkey    string
 	Bvn          string
-	Dob          sql.NullTime
+	Dob          time.Time
 	Currency     string
 	CreatedTime  sql.NullTime
 	ModifiedTime sql.NullTime

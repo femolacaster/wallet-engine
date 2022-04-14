@@ -48,8 +48,8 @@ func (w *Wallet) Create(ctx context.Context, walletNumber string, isActive strin
 	return wallet, nil
 }
 
-func (t *Transaction) Create(ctx context.Context, transactionRef string, transactionType string, transactionTimestamp time.Time, amount string, secretkey string, transactionStatus string, transactionDescription string, balance string, walletID int32) (internal.Transaction, error) {
-	transaction, err := t.repo.Create(ctx, transactionRef, transactionType, transactionTimestamp, amount, secretkey, transactionStatus, transactionDescription, balance, walletID)
+func (t *Transaction) Create(ctx context.Context, transactionRef string, transactionType string, transactionTimestamp time.Time, amount string, secretkey string, transactionStatus string, transactionDescription string, walletID int32) (internal.Transaction, error) {
+	transaction, err := t.repo.Create(ctx, transactionRef, transactionType, transactionTimestamp, amount, secretkey, transactionStatus, transactionDescription, walletID)
 	if err != nil {
 		return internal.Transaction{}, fmt.Errorf("transaction repository creation: %w", err)
 	}

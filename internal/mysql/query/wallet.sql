@@ -26,11 +26,10 @@ INSERT INTO transactions (
   secretkey,
   transaction_status,
   transaction_description,
-  balance,
   wallet_id
 )
 VALUES (
-  ?,?,?,?,?,?,?,?,?,?
+  ?,?,?,?,?,?,?,?,?
 );
 
 

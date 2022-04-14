@@ -83,11 +83,10 @@ INSERT INTO transactions (
   secretkey,
   transaction_status,
   transaction_description,
-  balance,
   wallet_id
 )
 VALUES (
-  ?,?,?,?,?,?,?,?,?,?
+  ?,?,?,?,?,?,?,?,?
 )
 `
 
@@ -100,7 +99,6 @@ type InsertTransactionParams struct {
 	Secretkey              string
 	TransactionStatus      string
 	TransactionDescription string
-	Balance                string
 	WalletID               sql.NullInt32
 }
 
@@ -114,7 +112,6 @@ func (q *Queries) InsertTransaction(ctx context.Context, arg InsertTransactionPa
 		arg.Secretkey,
 		arg.TransactionStatus,
 		arg.TransactionDescription,
-		arg.Balance,
 		arg.WalletID,
 	)
 }

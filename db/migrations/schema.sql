@@ -22,7 +22,6 @@ CREATE TABLE transactions (
   secretkey text UNIQUE NOT NULL,
   transaction_status text NOT NULL,
   transaction_description text NOT NULL,
-  balance numeric(20,2) NOT NULL,
   created_time TIMESTAMP default current_timestamp,
   modified_time TIMESTAMP default current_timestamp on update current_timestamp,
   wallet_id int
