@@ -51,7 +51,7 @@ func (w *WalletHandler) Register(r *mux.Router) {
 }
 
 func (t *TransactionHandler) Register(r *mux.Router) {
-	r.HandleFunc("/transactions", t.create).Methods(http.MethodPost)
+	r.HandleFunc("/transaction", t.create).Methods(http.MethodPost)
 }
 
 type Wallet struct {
@@ -107,6 +107,7 @@ type CreateTransactionResponse struct {
 
 func (wa *WalletHandler) create(w http.ResponseWriter, r *http.Request) {
 	var req CreateWalletRequest
+	fmt.Println(&req)
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		renderErrorResponse(w, "invalid request", http.StatusBadRequest)
 		return

@@ -95,7 +95,7 @@ Install my-project with npm
   #Load Environmental Variables and configure bash to use direnv and start API server
   direnv allow
   eval "$(direnv hook bash)"
-  cd cmd && go run main.go
+  go run cmd/main.go
 ```
    
 <!-- Running Tests -->
@@ -113,9 +113,14 @@ To run tests, run the following command
 
 This is a generic wallet engine where you can generate a new wallet, add a debit/credit card, activate or deactivate a wallet via the RESTAPI.
 The endpoints are:
-POST /wallet - use this to generate a new wallet
-/wallets/{id:%s} - use this to update a new wallet. Change the is_active JSON input parameter to 0 or 1 to either activate or deactivate wallet.
-/transactions- add a new debit or credit transaction on a wallet. The transaction_type JSON input parameter specifies whether it is debit or credit
+** POST /wallet - use this to generate a new wallet **
+curl -X POST -d '{"first_name":"Olufemi", "last_name":"Alabi", "email":"olufemi@example.com", "secretkey":"xxxxxxx", "bvn":"12678905", "dob":"2011-09-01", "currency":"naira"}' http://0.0.0.0:9967/wallet
+
+** /wallets/{id:%s} - use this to update a new wallet. Change the is_active JSON input parameter to 0 or 1 to either activate or deactivate wallet. **
+curl -X PUT -d '{"is_active":"0"}' http://0.0.0.0:9967/wallets/3
+
+** /transactions- add a new debit or credit transaction on a wallet. The transaction_type JSON input parameter specifies whether it is debit or credit **
+curl -X POST -d '{"transaction_type":"credit", "amount":"500.02",  "secretkey":"xxxxxxx", "transaction_description":"Credit to wallet", "wallet_id":3}' http://0.0.0.0:9967/transaction
 
 <!-- Roadmap -->
 ## :compass: Roadmap
