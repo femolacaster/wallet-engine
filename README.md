@@ -45,7 +45,7 @@ Some technical considerations I took were to use a microservices implementation 
 ### :space_invader: Tech Stack
 
 <details>
-  <summary>Client</summary>
+  <summary>Server</summary>
   <ul>
     <li><a href="https://go.dev/">Golang</a></li>
   </ul>
@@ -92,8 +92,12 @@ This project uses go >= 1.17
 Install my-project with npm
 
 ```bash
-  yarn install my-project
-  cd my-project
+  #Load Environmental Variables and configure bash to use direnv
+  direnv allow
+  eval "$(direnv hook bash)"
+  #Start API server
+  cd cmd
+  go run main.go
 ```
    
 <!-- Running Tests -->
@@ -102,21 +106,27 @@ Install my-project with npm
 To run tests, run the following command
 
 ```bash
-  yarn test test
+  #In GO, test files end with _test.go. 
+  go test [filename]_test.go
 ```
 
 <!-- Usage -->
 ## :eyes: Usage
 
-This is a generic wallet engine where you can generate a new wallet, add a debit/credit card, activate or deactivate a wallet.
+This is a generic wallet engine where you can generate a new wallet, add a debit/credit card, activate or deactivate a wallet via the RESTAPI.
+The endpoints are:
+POST /wallet - use this to generate a new wallet
+/wallets/{id:%s} - use this to update a new wallet. Change the is_active JSON input parameter to 0 or 1 to either activate or deactivate wallet.
+/transactions- add a new debit or credit transaction on a wallet. The transaction_type JSON input parameter specifies whether it is debit or credit
 
 <!-- Roadmap -->
 ## :compass: Roadmap
 
-* [x] Add more tests
+* [ ] Add more tests
 * [ ] Add authentication and multi-factor aunthentication
-* [x] Add observability
+* [ ] Add observability
 * [ ] Add more microservices concept for durability
+* [x] Add Swagger API
 
 
 
@@ -134,8 +144,6 @@ Olufemi Alabi - [@dev.to](https://dev.to/femolacaster)
 
 <!-- Acknowledgments -->
 ## :gem: Acknowledgements
-
-Use this section to mention useful resources and libraries that you have used in your projects.
 
 
  - [Awesome README](https://github.com/Louis3797/awesome-readme-template/blob/main/README.md)
