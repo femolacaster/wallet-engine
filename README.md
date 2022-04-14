@@ -70,7 +70,7 @@ Some technical considerations I took were to use a microservices implementation 
 <!-- Env Variables -->
 ### :key: Environment Variables
 
-To run this project, you will need to add the following environment variables to your .envrc file
+To run this project, you will need to add the DATABASE_URL environment variables to your .envrc file which is a DSN of format username:password@tcp(database_host:database_port)/database_name
 
 `DATABASE_URL`
 
