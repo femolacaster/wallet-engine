@@ -27,12 +27,12 @@ type Wallets struct {
 	ID           int64
 	WalletNumber string
 	IsActive     string
-	FirstName    sql.NullString
-	LastName     sql.NullString
+	FirstName    string
+	LastName     string
 	Email        string
 	Secretkey    string
 	Bvn          string
-	Dob          sql.NullTime
+	Dob          time.Time
 	Currency     string
 	CreatedTime  sql.NullTime
 	ModifiedTime sql.NullTime

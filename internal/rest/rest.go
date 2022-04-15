@@ -2,15 +2,16 @@ package rest
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
-type errorResponse struct {
+type ErrorResponse struct {
 	Error string `json:"error"`
 }
 
 func renderErrorResponse(w http.ResponseWriter, msg string, status int) {
-	renderResponse(w, errorResponse{Error: msg}, status)
+	renderResponse(w, ErrorResponse{Error: msg}, status)
 }
 
 func renderResponse(w http.ResponseWriter, res interface{}, status int) {
@@ -18,7 +19,6 @@ func renderResponse(w http.ResponseWriter, res interface{}, status int) {
 
 	content, err := json.Marshal(res)
 	if err != nil {
-		// XXX Do something with the error ;)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -26,6 +26,6 @@ func renderResponse(w http.ResponseWriter, res interface{}, status int) {
 	w.WriteHeader(http.StatusCreated)
 
 	if _, err = w.Write(content); err != nil {
-		// XXX Do something with the error ;)
+		fmt.Printf("There is an error in writing the REST API%s", err)
 	}
 }

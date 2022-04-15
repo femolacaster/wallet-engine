@@ -16,11 +16,18 @@ import (
 
 const numberRegEx string = `[0-9]+`
 
+//go:generate $GOBIN/counterfeiter -o resttest/wallet_service.gen.go . WalletService
+
+// WalletService ...
+
 type WalletService interface {
 	Create(ctx context.Context, walletNumber string, isActive string, firstName string, lastName string, email string, secretkey string, bvn string, dob time.Time, currency string) (internal.Wallet, error)
 	Update(ctx context.Context, id int64, isActive string) error
 }
 
+//go:generate $GOBIN/counterfeiter -o resttest/transaction_service.gen.go . TransactionService
+
+// TransactionService ...
 type TransactionService interface {
 	Create(ctx context.Context, transactionRef string, transactionType string, transactionTimestamp time.Time, amount string, secretkey string, transactionStatus string, transactionDescription string, walletID int32) (internal.Transaction, error)
 }
@@ -109,15 +116,17 @@ func (wa *WalletHandler) create(w http.ResponseWriter, r *http.Request) {
 	var req CreateWalletRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		fmt.Printf("The error is%s\n", err)
 		renderErrorResponse(w, "invalid request", http.StatusBadRequest)
 		return
 	}
-	fmt.Printf("The last request is%+v\n", req)
+
 	defer r.Body.Close()
 
 	walletNumber := xid.New().String()
+	dob, _ := time.Parse("2006-01-02", req.Dob.String())
 
-	wallet, err := wa.svc.Create(r.Context(), walletNumber, "1", req.FirstName, req.LastName, req.Email, req.Secretkey, req.Bvn, req.Dob, req.Currency)
+	wallet, err := wa.svc.Create(r.Context(), walletNumber, "1", req.FirstName, req.LastName, req.Email, req.Secretkey, req.Bvn, dob, req.Currency)
 	if err != nil {
 		renderErrorResponse(w, "create failed", http.StatusInternalServerError)
 		return
