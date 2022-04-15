@@ -31,7 +31,7 @@
 <!-- About the Project -->
 ## :star2: About the Project
 A simple wallet engine microservices API implementation written in idiomatic GO.
-Some technical considerations I took were to use a microservices implementation with a repository interface and an onion-style architecture around the domain-driven design. This is to make sure the Golang code is as idiomatic as possible, maintainable, reduces technical debts and release cycles, and can scale rapidly.
+Some technical considerations I took were to use a microservices implementation with a repository interface for dependency injection and an onion-style architecture around the domain-driven design. This is to make sure the Golang code is as idiomatic as possible, maintainable, reduces technical debts and release cycles, and can scale rapidly.
 
 <!-- Screenshots -->
 ### :camera: Screenshots
@@ -125,11 +125,14 @@ curl -X POST -d '{"transaction_type":"credit", "amount":"500.02",  "secretkey":"
 <!-- Roadmap -->
 ## :compass: Roadmap
 
-* [ ] Add more tests
+* [x] Add more tests
+* [ ] Validate secret key before transaction
 * [ ] Add authentication and multi-factor aunthentication
 * [ ] Add observability
 * [ ] Add more microservices concept for durability
-* [x] Add Swagger API
+* [ ] E-mail verification
+* [ ] Encrypt secretkey
+* [] Add Swagger API
 
 
 
