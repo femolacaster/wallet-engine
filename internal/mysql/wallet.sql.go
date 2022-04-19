@@ -8,7 +8,6 @@ package mysql
 import (
 	"context"
 	"database/sql"
-	"time"
 )
 
 const changeWalletStatus = `-- name: ChangeWalletStatus :exec
@@ -37,11 +36,10 @@ INSERT INTO wallets (
   email,
   secretkey,
   bvn,
-  dob,
   currency
 )
 VALUES (
-?, ?,?, ?, ?, ?, ?, ?, ?, ?
+?, ?,?, ?, ?, ?, ?, ?, ?
 )
 `
 
@@ -54,7 +52,6 @@ type GenerateWalletParams struct {
 	Email        string
 	Secretkey    string
 	Bvn          string
-	Dob          sql.NullTime
 	Currency     string
 }
 
@@ -68,7 +65,6 @@ func (q *Queries) GenerateWallet(ctx context.Context, arg GenerateWalletParams) 
 		arg.Email,
 		arg.Secretkey,
 		arg.Bvn,
-		arg.Dob,
 		arg.Currency,
 	)
 }
@@ -78,7 +74,6 @@ INSERT INTO transactions (
   id,
   transaction_ref,
   transaction_type,
-  transaction_timestamp,
   amount,
   secretkey,
   transaction_status,
@@ -86,7 +81,7 @@ INSERT INTO transactions (
   wallet_id
 )
 VALUES (
-  ?,?,?,?,?,?,?,?,?
+  ?,?,?,?,?,?,?,?
 )
 `
 
@@ -94,12 +89,11 @@ type InsertTransactionParams struct {
 	ID                     int64
 	TransactionRef         string
 	TransactionType        string
-	TransactionTimestamp   time.Time
 	Amount                 string
 	Secretkey              string
 	TransactionStatus      string
 	TransactionDescription string
-	WalletID               int32
+	WalletID               sql.NullInt32
 }
 
 func (q *Queries) InsertTransaction(ctx context.Context, arg InsertTransactionParams) (sql.Result, error) {
@@ -107,7 +101,6 @@ func (q *Queries) InsertTransaction(ctx context.Context, arg InsertTransactionPa
 		arg.ID,
 		arg.TransactionRef,
 		arg.TransactionType,
-		arg.TransactionTimestamp,
 		arg.Amount,
 		arg.Secretkey,
 		arg.TransactionStatus,

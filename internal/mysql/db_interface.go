@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"time"
 
 	"github.com/femolacaster/wallet-engine/internal"
 )
@@ -32,8 +31,7 @@ func NewTransaction(db *sql.DB) *Transaction {
 }
 
 // Generate Wallet
-func (w *Wallet) Create(ctx context.Context, walletNumber string, isActive string, firstName string, lastName string, email string, secretkey string, bvn string, dob time.Time, currency string) (internal.Wallet, error) {
-
+func (w *Wallet) Create(ctx context.Context, walletNumber string, isActive string, firstName string, lastName string, email string, secretkey string, bvn string, currency string) (internal.Wallet, error) {
 	sqlResult, err := w.q.GenerateWallet(ctx, GenerateWalletParams{
 		WalletNumber: walletNumber,
 		IsActive:     isActive,
@@ -42,7 +40,6 @@ func (w *Wallet) Create(ctx context.Context, walletNumber string, isActive strin
 		Email:        email,
 		Secretkey:    secretkey,
 		Bvn:          bvn,
-		Dob:          newNullTime(dob),
 		Currency:     currency,
 	})
 	if err != nil {
@@ -63,22 +60,20 @@ func (w *Wallet) Create(ctx context.Context, walletNumber string, isActive strin
 		Email:        email,
 		Secretkey:    secretkey,
 		Bvn:          bvn,
-		Dob:          dob,
 		Currency:     currency,
 	}, nil
 }
 
 // Generate Transactions
-func (t *Transaction) Create(ctx context.Context, transactionRef string, transactionType string, transactionTimestamp time.Time, amount string, secretkey string, transactionStatus string, transactionDescription string, walletID int32) (internal.Transaction, error) {
+func (t *Transaction) Create(ctx context.Context, transactionRef string, transactionType string, amount string, secretkey string, transactionStatus string, transactionDescription string, walletID int32) (internal.Transaction, error) {
 	sqlResult, err := t.q.InsertTransaction(ctx, InsertTransactionParams{
 		TransactionRef:         transactionRef,
 		TransactionType:        transactionType,
-		TransactionTimestamp:   transactionTimestamp,
 		Amount:                 amount,
 		Secretkey:              secretkey,
 		TransactionStatus:      transactionStatus,
 		TransactionDescription: transactionDescription,
-		WalletID:               walletID,
+		WalletID:               newNullInt32(walletID),
 	})
 	if err != nil {
 		return internal.Transaction{}, fmt.Errorf("Transaction failed: %w", err)
@@ -93,7 +88,6 @@ func (t *Transaction) Create(ctx context.Context, transactionRef string, transac
 		ID:                     id,
 		TransactionRef:         transactionRef,
 		TransactionType:        transactionType,
-		TransactionTimestamp:   transactionTimestamp,
 		Amount:                 amount,
 		Secretkey:              secretkey,
 		TransactionStatus:      transactionStatus,

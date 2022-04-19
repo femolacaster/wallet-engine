@@ -29,7 +29,6 @@ func (t Transaction) Validate() error {
 	return nil
 }
 */
-
 type Wallet struct {
 	ID           int64
 	WalletNumber string

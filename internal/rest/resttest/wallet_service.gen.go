@@ -4,26 +4,24 @@ package resttest
 import (
 	"context"
 	"sync"
-	"time"
 
 	"github.com/femolacaster/wallet-engine/internal"
 	"github.com/femolacaster/wallet-engine/internal/rest"
 )
 
 type FakeWalletService struct {
-	CreateStub        func(context.Context, string, string, string, string, string, string, string, time.Time, string) (internal.Wallet, error)
+	CreateStub        func(context.Context, string, string, string, string, string, string, string, string) (internal.Wallet, error)
 	createMutex       sync.RWMutex
 	createArgsForCall []struct {
-		arg1  context.Context
-		arg2  string
-		arg3  string
-		arg4  string
-		arg5  string
-		arg6  string
-		arg7  string
-		arg8  string
-		arg9  time.Time
-		arg10 string
+		arg1 context.Context
+		arg2 string
+		arg3 string
+		arg4 string
+		arg5 string
+		arg6 string
+		arg7 string
+		arg8 string
+		arg9 string
 	}
 	createReturns struct {
 		result1 internal.Wallet
@@ -50,27 +48,26 @@ type FakeWalletService struct {
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeWalletService) Create(arg1 context.Context, arg2 string, arg3 string, arg4 string, arg5 string, arg6 string, arg7 string, arg8 string, arg9 time.Time, arg10 string) (internal.Wallet, error) {
+func (fake *FakeWalletService) Create(arg1 context.Context, arg2 string, arg3 string, arg4 string, arg5 string, arg6 string, arg7 string, arg8 string, arg9 string) (internal.Wallet, error) {
 	fake.createMutex.Lock()
 	ret, specificReturn := fake.createReturnsOnCall[len(fake.createArgsForCall)]
 	fake.createArgsForCall = append(fake.createArgsForCall, struct {
-		arg1  context.Context
-		arg2  string
-		arg3  string
-		arg4  string
-		arg5  string
-		arg6  string
-		arg7  string
-		arg8  string
-		arg9  time.Time
-		arg10 string
-	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10})
+		arg1 context.Context
+		arg2 string
+		arg3 string
+		arg4 string
+		arg5 string
+		arg6 string
+		arg7 string
+		arg8 string
+		arg9 string
+	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9})
 	stub := fake.CreateStub
 	fakeReturns := fake.createReturns
-	fake.recordInvocation("Create", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10})
+	fake.recordInvocation("Create", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9})
 	fake.createMutex.Unlock()
 	if stub != nil {
-		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
@@ -84,17 +81,17 @@ func (fake *FakeWalletService) CreateCallCount() int {
 	return len(fake.createArgsForCall)
 }
 
-func (fake *FakeWalletService) CreateCalls(stub func(context.Context, string, string, string, string, string, string, string, time.Time, string) (internal.Wallet, error)) {
+func (fake *FakeWalletService) CreateCalls(stub func(context.Context, string, string, string, string, string, string, string, string) (internal.Wallet, error)) {
 	fake.createMutex.Lock()
 	defer fake.createMutex.Unlock()
 	fake.CreateStub = stub
 }
 
-func (fake *FakeWalletService) CreateArgsForCall(i int) (context.Context, string, string, string, string, string, string, string, time.Time, string) {
+func (fake *FakeWalletService) CreateArgsForCall(i int) (context.Context, string, string, string, string, string, string, string, string) {
 	fake.createMutex.RLock()
 	defer fake.createMutex.RUnlock()
 	argsForCall := fake.createArgsForCall[i]
-	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6, argsForCall.arg7, argsForCall.arg8, argsForCall.arg9, argsForCall.arg10
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6, argsForCall.arg7, argsForCall.arg8, argsForCall.arg9
 }
 
 func (fake *FakeWalletService) CreateReturns(result1 internal.Wallet, result2 error) {

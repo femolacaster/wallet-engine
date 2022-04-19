@@ -105,6 +105,8 @@ To run tests, run the following command
 
 ```bash
   #In GO, test files end with _test.go. 
+  #The  API test is in the rest directory
+  cd internal/rest/
   go test [filename]_test.go
 ```
 
@@ -114,7 +116,7 @@ To run tests, run the following command
 This is a generic wallet engine where you can generate a new wallet, add a debit/credit card, activate or deactivate a wallet via the RESTAPI.
 The endpoints are:
 ** POST /wallet - use this to generate a new wallet **
-curl -X POST -d '{"first_name":"Olufemi", "last_name":"Alabi", "email":"olufemi@example.com", "secretkey":"xxxxxxx", "bvn":"12678905", "dob":"2011-09-01", "currency":"naira"}' http://0.0.0.0:9967/wallet
+curl -X POST -d '{"first_name":"Olufemi", "last_name":"Alabi", "email":"olufemi@example.com", "secretkey":"xxxxxxx", "bvn":"12678905", "currency":"naira"}' http://0.0.0.0:9967/wallet
 
 ** /wallets/{id:%s} - use this to update a new wallet. Change the is_active JSON input parameter to 0 or 1 to either activate or deactivate wallet. **
 curl -X PUT -d '{"is_active":"1"}' http://0.0.0.0:9967/wallets/3

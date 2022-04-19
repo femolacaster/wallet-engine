@@ -18,3 +18,10 @@ func newNullString(s string) sql.NullString {
 		Valid:  s != "",
 	}
 }
+
+func newNullInt32(i int32) sql.NullInt32 {
+	return sql.NullInt32{
+		Int32: i,
+		Valid: i != 0,
+	}
+}

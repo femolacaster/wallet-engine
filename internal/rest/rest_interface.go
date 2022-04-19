@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/xid"
@@ -21,7 +20,7 @@ const numberRegEx string = `[0-9]+`
 // WalletService ...
 
 type WalletService interface {
-	Create(ctx context.Context, walletNumber string, isActive string, firstName string, lastName string, email string, secretkey string, bvn string, dob time.Time, currency string) (internal.Wallet, error)
+	Create(ctx context.Context, walletNumber string, isActive string, firstName string, lastName string, email string, secretkey string, bvn string, currency string) (internal.Wallet, error)
 	Update(ctx context.Context, id int64, isActive string) error
 }
 
@@ -29,7 +28,7 @@ type WalletService interface {
 
 // TransactionService ...
 type TransactionService interface {
-	Create(ctx context.Context, transactionRef string, transactionType string, transactionTimestamp time.Time, amount string, secretkey string, transactionStatus string, transactionDescription string, walletID int32) (internal.Transaction, error)
+	Create(ctx context.Context, transactionRef string, transactionType string, amount string, secretkey string, transactionStatus string, transactionDescription string, walletID int32) (internal.Transaction, error)
 }
 
 type WalletHandler struct {
@@ -62,38 +61,35 @@ func (t *TransactionHandler) Register(r *mux.Router) {
 }
 
 type Wallet struct {
-	ID           int64     `json:"id"`
-	WalletNumber string    `json:"wallet_number"`
-	IsActive     string    `json:"is_active"`
-	FirstName    string    `json:"first_name"`
-	LastName     string    `json:"last_name"`
-	Email        string    `json:"email"`
-	Secretkey    string    `json:"secretkey"`
-	Bvn          string    `json:"bvn"`
-	Dob          time.Time `json:"dob"`
-	Currency     string    `json:"currency"`
+	ID           int64  `json:"id"`
+	WalletNumber string `json:"wallet_number"`
+	IsActive     string `json:"is_active"`
+	FirstName    string `json:"first_name"`
+	LastName     string `json:"last_name"`
+	Email        string `json:"email"`
+	Secretkey    string `json:"secretkey"`
+	Bvn          string `json:"bvn"`
+	Currency     string `json:"currency"`
 }
 
 type Transaction struct {
-	ID                     int64     `json:"id"`
-	TransactionRef         string    `json:"transaction_ref"`
-	TransactionType        string    `json:"transaction_type"`
-	TransactionTimestamp   time.Time `json:"transaction_timestamp"`
-	Amount                 string    `json:"amount"`
-	Secretkey              string    `json:"secretkey"`
-	TransactionStatus      string    `json:"transaction_status"`
-	TransactionDescription string    `json:"transaction_description"`
-	WalletID               int32     `json:"wallet_id"`
+	ID                     int64  `json:"id"`
+	TransactionRef         string `json:"transaction_ref"`
+	TransactionType        string `json:"transaction_type"`
+	Amount                 string `json:"amount"`
+	Secretkey              string `json:"secretkey"`
+	TransactionStatus      string `json:"transaction_status"`
+	TransactionDescription string `json:"transaction_description"`
+	WalletID               int32  `json:"wallet_id"`
 }
 
 type CreateWalletRequest struct {
-	FirstName string    `json:"first_name"`
-	LastName  string    `json:"last_name"`
-	Email     string    `json:"email"`
-	Secretkey string    `json:"secretkey"`
-	Bvn       string    `json:"bvn"`
-	Dob       time.Time `json:"dob"`
-	Currency  string    `json:"currency"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Email     string `json:"email"`
+	Secretkey string `json:"secretkey"`
+	Bvn       string `json:"bvn"`
+	Currency  string `json:"currency"`
 }
 
 type CreateTransactionRequest struct {
@@ -124,9 +120,8 @@ func (wa *WalletHandler) create(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
 	walletNumber := xid.New().String()
-	dob, _ := time.Parse("2006-01-02", req.Dob.String())
 
-	wallet, err := wa.svc.Create(r.Context(), walletNumber, "1", req.FirstName, req.LastName, req.Email, req.Secretkey, req.Bvn, dob, req.Currency)
+	wallet, err := wa.svc.Create(r.Context(), walletNumber, "1", req.FirstName, req.LastName, req.Email, req.Secretkey, req.Bvn, req.Currency)
 	if err != nil {
 		renderErrorResponse(w, "create failed", http.StatusInternalServerError)
 		return
@@ -143,7 +138,6 @@ func (wa *WalletHandler) create(w http.ResponseWriter, r *http.Request) {
 				Email:        wallet.Email,
 				Secretkey:    wallet.Secretkey,
 				Bvn:          wallet.Bvn,
-				Dob:          wallet.Dob,
 				Currency:     wallet.Currency,
 			},
 		},
@@ -189,9 +183,8 @@ func (t *TransactionHandler) create(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
 	transactionRef := xid.New().String()
-	transactionTimestamp := time.Now()
 
-	transaction, err := t.svc.Create(r.Context(), transactionRef, req.TransactionType, transactionTimestamp, req.Amount, req.Secretkey, "success", req.TransactionDescription, req.WalletID)
+	transaction, err := t.svc.Create(r.Context(), transactionRef, req.TransactionType, req.Amount, req.Secretkey, "success", req.TransactionDescription, req.WalletID)
 
 	if err != nil {
 		renderErrorResponse(w, "create failed", http.StatusInternalServerError)
@@ -204,7 +197,6 @@ func (t *TransactionHandler) create(w http.ResponseWriter, r *http.Request) {
 				ID:                     transaction.ID,
 				TransactionRef:         transaction.TransactionRef,
 				TransactionType:        transaction.TransactionType,
-				TransactionTimestamp:   transactionTimestamp,
 				Amount:                 transaction.Amount,
 				Secretkey:              transaction.Secretkey,
 				TransactionStatus:      transaction.TransactionStatus,

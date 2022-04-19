@@ -8,11 +8,10 @@ INSERT INTO wallets (
   email,
   secretkey,
   bvn,
-  dob,
   currency
 )
 VALUES (
-?, ?,?, ?, ?, ?, ?, ?, ?, ?
+?, ?,?, ?, ?, ?, ?, ?, ?
 );
 
 
@@ -21,7 +20,6 @@ INSERT INTO transactions (
   id,
   transaction_ref,
   transaction_type,
-  transaction_timestamp,
   amount,
   secretkey,
   transaction_status,
@@ -29,7 +27,7 @@ INSERT INTO transactions (
   wallet_id
 )
 VALUES (
-  ?,?,?,?,?,?,?,?,?
+  ?,?,?,?,?,?,?,?
 );
 
 

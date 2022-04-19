@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/gorilla/mux"
@@ -18,7 +17,6 @@ import (
 )
 
 func TestWallet_Post(t *testing.T) {
-	dob_parse, _ := time.Parse("2006-01-02", time.Now().String())
 
 	t.Parallel()
 
@@ -47,7 +45,6 @@ func TestWallet_Post(t *testing.T) {
 						Email:        "kin",
 						Secretkey:    "kon",
 						Bvn:          "xxcdd",
-						Dob:          dob_parse,
 						Currency:     "naira",
 					},
 					nil)
@@ -59,7 +56,6 @@ func TestWallet_Post(t *testing.T) {
 					Email:     "kin",
 					Secretkey: "kon",
 					Bvn:       "xxcdd",
-					Dob:       dob_parse,
 					Currency:  "naira",
 				})
 
@@ -77,7 +73,6 @@ func TestWallet_Post(t *testing.T) {
 						Email:        "kin",
 						Secretkey:    "kon",
 						Bvn:          "xxcdd",
-						Dob:          dob_parse,
 						Currency:     "naira",
 					},
 				},
@@ -167,7 +162,6 @@ func TestTransaction_Post(t *testing.T) {
 						ID:                     3,
 						TransactionRef:         "tyghj",
 						TransactionType:        "credit",
-						TransactionTimestamp:   time.Now(),
 						Amount:                 "45000",
 						Secretkey:              "xxxxx",
 						TransactionStatus:      "open",
@@ -194,7 +188,6 @@ func TestTransaction_Post(t *testing.T) {
 						ID:                     3,
 						TransactionRef:         "tyghj",
 						TransactionType:        "credit",
-						TransactionTimestamp:   time.Now(),
 						Amount:                 "45000",
 						Secretkey:              "xxxxx",
 						TransactionStatus:      "open",

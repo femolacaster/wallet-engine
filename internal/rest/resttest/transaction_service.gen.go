@@ -4,25 +4,23 @@ package resttest
 import (
 	"context"
 	"sync"
-	"time"
 
 	"github.com/femolacaster/wallet-engine/internal"
 	"github.com/femolacaster/wallet-engine/internal/rest"
 )
 
 type FakeTransactionService struct {
-	CreateStub        func(context.Context, string, string, time.Time, string, string, string, string, int32) (internal.Transaction, error)
+	CreateStub        func(context.Context, string, string, string, string, string, string, int32) (internal.Transaction, error)
 	createMutex       sync.RWMutex
 	createArgsForCall []struct {
 		arg1 context.Context
 		arg2 string
 		arg3 string
-		arg4 time.Time
+		arg4 string
 		arg5 string
 		arg6 string
 		arg7 string
-		arg8 string
-		arg9 int32
+		arg8 int32
 	}
 	createReturns struct {
 		result1 internal.Transaction
@@ -36,26 +34,25 @@ type FakeTransactionService struct {
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeTransactionService) Create(arg1 context.Context, arg2 string, arg3 string, arg4 time.Time, arg5 string, arg6 string, arg7 string, arg8 string, arg9 int32) (internal.Transaction, error) {
+func (fake *FakeTransactionService) Create(arg1 context.Context, arg2 string, arg3 string, arg4 string, arg5 string, arg6 string, arg7 string, arg8 int32) (internal.Transaction, error) {
 	fake.createMutex.Lock()
 	ret, specificReturn := fake.createReturnsOnCall[len(fake.createArgsForCall)]
 	fake.createArgsForCall = append(fake.createArgsForCall, struct {
 		arg1 context.Context
 		arg2 string
 		arg3 string
-		arg4 time.Time
+		arg4 string
 		arg5 string
 		arg6 string
 		arg7 string
-		arg8 string
-		arg9 int32
-	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9})
+		arg8 int32
+	}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8})
 	stub := fake.CreateStub
 	fakeReturns := fake.createReturns
-	fake.recordInvocation("Create", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9})
+	fake.recordInvocation("Create", []interface{}{arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8})
 	fake.createMutex.Unlock()
 	if stub != nil {
-		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+		return stub(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
@@ -69,17 +66,17 @@ func (fake *FakeTransactionService) CreateCallCount() int {
 	return len(fake.createArgsForCall)
 }
 
-func (fake *FakeTransactionService) CreateCalls(stub func(context.Context, string, string, time.Time, string, string, string, string, int32) (internal.Transaction, error)) {
+func (fake *FakeTransactionService) CreateCalls(stub func(context.Context, string, string, string, string, string, string, int32) (internal.Transaction, error)) {
 	fake.createMutex.Lock()
 	defer fake.createMutex.Unlock()
 	fake.CreateStub = stub
 }
 
-func (fake *FakeTransactionService) CreateArgsForCall(i int) (context.Context, string, string, time.Time, string, string, string, string, int32) {
+func (fake *FakeTransactionService) CreateArgsForCall(i int) (context.Context, string, string, string, string, string, string, int32) {
 	fake.createMutex.RLock()
 	defer fake.createMutex.RUnlock()
 	argsForCall := fake.createArgsForCall[i]
-	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6, argsForCall.arg7, argsForCall.arg8, argsForCall.arg9
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4, argsForCall.arg5, argsForCall.arg6, argsForCall.arg7, argsForCall.arg8
 }
 
 func (fake *FakeTransactionService) CreateReturns(result1 internal.Transaction, result2 error) {

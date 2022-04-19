@@ -3,18 +3,17 @@ package service
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/femolacaster/wallet-engine/internal"
 )
 
 type WalletRepository interface {
-	Create(ctx context.Context, walletNumber string, isActive string, firstName string, lastName string, email string, secretkey string, bvn string, dob time.Time, currency string) (internal.Wallet, error)
+	Create(ctx context.Context, walletNumber string, isActive string, firstName string, lastName string, email string, secretkey string, bvn string, currency string) (internal.Wallet, error)
 	Update(ctx context.Context, id int64, isActive string) error
 }
 
 type TransactionRepository interface {
-	Create(ctx context.Context, transactionRef string, transactionType string, transactionTimestamp time.Time, amount string, secretkey string, transactionStatus string, transactionDescription string, walletID int32) (internal.Transaction, error)
+	Create(ctx context.Context, transactionRef string, transactionType string, amount string, secretkey string, transactionStatus string, transactionDescription string, walletID int32) (internal.Transaction, error)
 }
 
 type Wallet struct {
@@ -39,8 +38,8 @@ func NewTransaction(repo TransactionRepository) *Transaction {
 	}
 }
 
-func (w *Wallet) Create(ctx context.Context, walletNumber string, isActive string, firstName string, lastName string, email string, secretkey string, bvn string, dob time.Time, currency string) (internal.Wallet, error) {
-	wallet, err := w.repo.Create(ctx, walletNumber, isActive, firstName, lastName, email, secretkey, bvn, dob, currency)
+func (w *Wallet) Create(ctx context.Context, walletNumber string, isActive string, firstName string, lastName string, email string, secretkey string, bvn string, currency string) (internal.Wallet, error) {
+	wallet, err := w.repo.Create(ctx, walletNumber, isActive, firstName, lastName, email, secretkey, bvn, currency)
 	if err != nil {
 		return internal.Wallet{}, fmt.Errorf("wallet repository creation: %w", err)
 	}
@@ -48,8 +47,8 @@ func (w *Wallet) Create(ctx context.Context, walletNumber string, isActive strin
 	return wallet, nil
 }
 
-func (t *Transaction) Create(ctx context.Context, transactionRef string, transactionType string, transactionTimestamp time.Time, amount string, secretkey string, transactionStatus string, transactionDescription string, walletID int32) (internal.Transaction, error) {
-	transaction, err := t.repo.Create(ctx, transactionRef, transactionType, transactionTimestamp, amount, secretkey, transactionStatus, transactionDescription, walletID)
+func (t *Transaction) Create(ctx context.Context, transactionRef string, transactionType string, amount string, secretkey string, transactionStatus string, transactionDescription string, walletID int32) (internal.Transaction, error) {
+	transaction, err := t.repo.Create(ctx, transactionRef, transactionType, amount, secretkey, transactionStatus, transactionDescription, walletID)
 	if err != nil {
 		return internal.Transaction{}, fmt.Errorf("transaction repository creation: %w", err)
 	}
